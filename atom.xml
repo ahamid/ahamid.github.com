@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[Devoured By Lions]]></title>
   <link href="http://ahamid.github.com/atom.xml" rel="self"/>
   <link href="http://ahamid.github.com/"/>
-  <updated>2011-12-30T14:37:23-05:00</updated>
+  <updated>2011-12-30T14:46:33-05:00</updated>
   <id>http://ahamid.github.com/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[aaron]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[hello octopress world]]></title>
+    <link href="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/"/>
+    <updated>2011-12-30T14:44:00-05:00</updated>
+    <id>http://ahamid.github.com/blog/2011/12/30/hello-octopress-world</id>
+    <content type="html"><![CDATA[<p>i for one welcome my new cephalopod overlords</p>
+]]></content>
+  </entry>
   
 </feed>
