@@ -102,7 +102,324 @@
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/07/22/Latest-Capybara-and-Selenium/">Latest Capybara and Selenium</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-22T23:15:00-04:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">I just updated to the latest Capybara and Selenium on a project that I&#8217;ve been away from for a while and had to make the following change:<br /><br />http://johnwilger.com/2011/04/capybara_selenium_and_firefox_3_5.html<br /><br /><blockquote>Capybara::Selenium::Driver::DEFAULT_OPTIONS[:resynchronize] = false</blockquote><br /><br />I am also getting the following warning:<br /><br /><blockquote>Selenium::WebDriver::Element#drag_and_drop_{by,on} is deprecated. Please use Selenium::WebDriver::Driver#action (and Selenium::WebDriver::ActionBuilder) instead.<br /></blockquote><br /><br />However after some investigation it appears that this is an issue Capybara should deal with; presumably the Capybara implementation should be updated and not my integration test code (which should only use the external Capybara API).</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/10/Monads-in-Java/">Monads in Java</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-10T18:09:00-04:00" pubdate data-updated="true">Jun 10<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">Preserving this from some old stuff I wrote.  Don&#8217;t judge me.<br /><br /><script src="https://gist.github.com/1019897.js"> </script></div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/10/Increasing-processes%2C-sessions-and-transactions-in-Oracle-XE/">Increasing Processes, Sessions and Transactions in Oracle XE</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-10T16:56:00-04:00" pubdate data-updated="true">Jun 10<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">Whenever I set up Oracle XE from scratch for development I always have to hunt this down.<br /><blockquote><br />alter system set processes = 150 scope = spfile;<br />alter system set sessions = 300 scope = spfile;<br />alter system set transactions = 330 scope = spfile;<br /></blockquote><br /><a href="http://www.fatlemon.co.uk/2009/06/increasing-processes-sessions-and-transactions-in-oracle-xe/">http://www.fatlemon.co.uk/2009/06/increasing-processes-sessions-and-transactions-in-oracle-xe/</a></div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/05/01/The-Curiously-Recurring-Installation-Pattern%2A/">The Curiously Recurring Installation Pattern*</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-01T16:20:00-04:00" pubdate data-updated="true">May 1<span>st</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">Once again I find myself installing a piece of *nix software, only to struggle against its blind insistence on being installed in the bowels of my system.  It goes something like this:<br /><br />* ./configure # let it use the default path because we will rewrite the dest dir on install and stow it (ha ha.)<br />* make<br />* make install DESTDIR=&#8221;/my/software&#8221;<br /><br />Depending on the software build system, this may or may not work.  (see: http://www.ruby-forum.com/topic/818302).  If it doesn&#8217;t, well, it&#8217;s your lucky day.  You do have all the output in your terminal scrollback right?  Good, &#8216;cause you&#8217;ll need to go and manually remove every last file it installed and try again.<br /><br />If DESTDIR worked, you may be able to stow now:<br /><br />* sudo stow -t /usr/local -d /my/software awesome-app<br /><br />Except of course if the build system installed in this brilliant fashion: /my/software/usr/local/&#8230;  Oops!  Time to clean up again!  (if you are brave/foolish you can certainly try &#8216;stow -t / -d /my/software awesome-app&#8217; instead. Good luck with that.)<br /><br />* cd /my/software/awesome-app<br />* mv usr/local/* .<br />* rm -r usr/local<br />* cd ..<br />* sudo stow -t /usr/local -d /my/software awesome-app<br /><br />Since this is such a colossal PITA, in some cases wrappers have been developed that essentially put a big condom around builds and allow you to manage them like a sane, normal user, in your own directory.  Some examples are RVM, the Ruby Version Manager, NVM, the Node Version Manager (takes care of NPM as well), and PythonBrew (an RVM equivalent for Python).  While these are absolute life-savers, they are really covering up an underlying flaw which is that a lot of *nix software is built to install only into the global system (which frankly is mystifying given *nix&#8217;s heritage of strong user/system separation.  maybe it&#8217;s just a legacy of the traditional *nix tool chain).<br /><br />(* http://en.wikipedia.org/wiki/Curiously_recurring_template_pattern)</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/04/08/ruby-oci8-on-Fedora-x86_64/">Ruby-oci8 on Fedora X86_64</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-08T13:46:00-04:00" pubdate data-updated="true">Apr 8<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">Read: <a href="http://ruby-oci8.rubyforge.org/en/InstallForInstantClient.html">http://ruby-oci8.rubyforge.org/en/InstallForInstantClient.html</a><div>Download and install: <a href="http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html">http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html</a></div><div><ul><li><span><span>oracle-instantclient-basic-10.2.0.4-1.x86_64.rpm</span></span></li><li><span class="Apple-style-span" style="font-family: arial, helvetica, sans-serif; font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; "><span><span>oracle-instantclient-devel-10.2.0.4-1.x86_64.rpm</span></span></span></li></ul><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">Set your LD_LIBRARY_PATH so compile can find Oracle libs. <i><b>Double check the path here actually reflects the version of packages you downloaded</b></i>: export LD_LIBRARY_PATH=/usr/lib/oracle/10.2.0.4/client/lib</span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;"><br /></span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; ">Install ruby-oci8 gem: gem install ruby-oci8 (or via bundler)</span></span></div></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;"><br /></span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">With luck ruby-oc8 will build.</span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;"><br /></span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">Tell SELinux that these libs can have an executable stack: (see: </span></span><a href="http://fedoraforum.org/forum/showthread.php?t=259605">http://fedoraforum.org/forum/showthread.php?t=259605</a>)</div><div><ul><li><span class="Apple-style-span" style="font-family: arial, helvetica, sans-serif; font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; ">sudo /usr/bin/execstack -c /usr/lib/oracle/10.2.0.4/client64/lib/libclntsh.so.10.1 </span></li><li><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">sudo /usr/bin/execstack -c /usr/lib/oracle/10.2.0.4/client64/lib/libnnz10.so</span></span></li></ul><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">Test it:</span></span></div></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;"><br /></span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">require &#8216;dbi&#8217;</span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">require &#8216;oci8&#8217;</span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;"><div>dbh = DBI.connect(&#8220;DBI:OCI8:whatever&#8221;, username, password)</div><div>dbh.execute(&#8216;select * from whatever&#8217;)</div></span></span></div></div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/04/07/Oracle-XE-on-Fedora-x86_64/">Oracle XE on Fedora X86_64</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-07T14:54:00-04:00" pubdate data-updated="true">Apr 7<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">If you encounter problems installing Oracle XE on Fedora x86_64, install the &#8216;libaio.i686&#8217; package before installing oracle-xe.  If you have already installed the oracle-xe package, you may have to remove it and then reinstall it to ensure that it initializes the database correctly (it will have failed the first time).<div><br /></div><div>Symptoms include the following on connect:</div><div><br /></div><div>ERROR:ORA-01034: ORACLE not available</div><div>ORA-27101: shared memory realm does not exist</div><div>Linux Error: 2: No such file or directory</div><div><br /></div><div>You will also see some errors on your tnslisteners.log.</div></div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/22/This-Software-shall-be-used-for-Good%2C-not-Evil/">This Software Shall Be Used for Good, Not Evil</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-22T00:15:00-04:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><a href="http://www.infoq.com/presentations/Heretical-Open-Source">http://www.infoq.com/presentations/Heretical-Open-Source</a><div><br /></div><div>Douglas Crockford gave a really nice presentation at Strange Loop.  I encourage you to check it out.  He talks about the history of HTML, XML and JSON, and finally the legacy of (Admiral) Grace Murray Hopper, developer of the first compiler.  However, in the middle he goes on a humorous and bizarre tangent regarding a clause he added to his JSON license, &#8220;The Software shall be used for Good, not Evil.&#8221;, and in the process takes a swipe at the OSI, Free Software Foundation and Richard Stallman (and Google for that matter).  Now, while he certainly makes light of this clause, Crockford claims he is &#8220;serious&#8221; about it, while admitting it is &#8220;intentionally vague and unenforceable&#8221;.  Well, the funny thing about legal documents is that most people really like them to be <i>not-vague</i> and <i>enforceable</i>.  Ultimately I think his goals with his license were no different from those of free software enthusiasts - the right to dictate his (the author&#8217;s) particular terms of use.  The only difference is that the FSF decides to use specific and enforceable legal language, instead of facetious sarcasm.  It is true that software licenses and licensing are sometimes dreadfully tedious topics, and if you wish to avoid it all with a simple and liberal license, all the more power to you.  I just find slamming free software a little tired.</div><div><br /></div><div>Then again, he is a <i>heretic</i>.</div></div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/02/26/Trials-and-Tribulations-with-Bundler/">Trials and Tribulations With Bundler</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-26T14:23:00-05:00" pubdate data-updated="true">Feb 26<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://www.usfunds.com/media/images/frank-talk-images/jul-dec2010/AustinPowers-070910.jpg"><img style="display:block; margin:0px auto 10px; text-align:center;cursor:pointer; cursor:hand;width: 350px; height: 207px;" src="http://www.usfunds.com/media/images/frank-talk-images/jul-dec2010/AustinPowers-070910.jpg" border="0" alt="" /></a><div style="text-align: left;"><br /></div><div style="text-align: left;">Bundler is awesome.  But Bundler also sucks.</div><div style="text-align: left;"><br /></div><div style="text-align: justify;">I have been trying to devise a strategy for deploying pre-packaged addons to a Ruby program, but have concluded, much to my surprise, that there is just no simple way to do this in the current Ruby ecosystem.  My needs are simple:</div><div style="text-align: left;"><ol><li>Deliver my addon code</li><li>Deliver any necessary dependencies with my addon code</li><li>Invoke this addon code from a main program <i>without additional a-priori configuration of the main program</i></li></ol><div style="text-align: justify;">The first stop is RubyGems.  Gems are great.  They are the quantum of dependency management in Ruby, and are analogous to Maven artifacts in the Java ecosystem.  An add-on is nominally equivalent to a gem.  The tricky part however is obtaining all the gem dependencies.  Unfortunately RubyGems only resolves dependencies during installation, so is not helpful in, say, <i>bundling </i>gems<i>.</i>  If we are to build our add-on as a gem, then that implies that we need to explicitly run a &#8220;gem install&#8221; command at deploy time, and we get whatever version of gem dependencies rubygems resolves at deploy time (also assuming the installation machine has network access).  This is not desirable.  Instead we would like to bundle all the necessary dependencies together with the addon.  This is where, you guessed it, Bundler comes in.</div><div><br /></div><div style="text-align: justify;">Bundler&#8217;s mandate is to perform dependency resolution and bundling, for <i>applications</i>.  The distinction between applications and libraries is very explicit, in contrast with Maven for example, in which dependency management is handled uniformly (applications are &#8220;packaged&#8221; the same way as libraries).  This is unfortunate and means that one must use the gem specification to specify library dependencies, and Bundler Gemfile to specify application dependencies.  Bundler <i>can</i> <a href="http://gembundler.com/rubygems.html">parse dependencies from gem specs however</a>.  Bundler cannot (yet?) handle nesting/composing Gemfiles (because it is only designed for top-level applications).  But with some subterfuge we can write something like this:</div><div><div></div><blockquote><div>source &#8220;http://rubygems.org&#8221;</div><div><br /></div><div>gem &#8220;json_pure&#8221;</div><div><br /></div><div>Dir.glob(File.dirname(__FILE__) + &#8216;/ext/*/Gemfile&#8217;) do |file|</div><div>  # evil</div><div>  eval File.new(file).read</div><div>end</div></blockquote><div></div></div><div>Here we have coerced our main Gemfile to load the contents of subordinate Gemfiles dynamically.  We can reconfigure our addon such that it is no longer a gem, but instead specifies its dependencies in its own Gemfile.</div><div><br /></div><div style="text-align: justify;">We cannot pat ourselves on the back however, because this cleverness only gets us so far (not that far).  Bundler resolves dependencies <i>statically</i>.  It requires the static generation of a <b>Gemfile.lock </b>file which contains the static graph of dependencies resolved at the time <b>bundle install</b> was run (even if all the dependencies are already present in the right locations).  So this is a dead end.  We cannot just drop down an addon with its own Gemfile and dependencies without statically re-resolving the entire dependency graph (<a href="https://gist.github.com/b8d47d4ca590e7b00539">see for more details</a>).</div><div><br /></div><div style="text-align: justify;">What have others done in this situation?  There are of course Ruby applications that support &#8220;plugins&#8221; of some sort.  The first one that came to mind was RedCar.  It turns out RedCar plugins typically include the source of any dependencies.  That is definitely one solution, however I would like to avoid that if possible.  It&#8217;s possible to &#8220;include&#8221; third party Git repos in your own Git repo via the submodule mechanism.  Unfortunately (to my knowledge) submodules do not support checking out specific paths.  Using submodules would require additional mechanisms to filter in/out the right repository content when packaging the plugin.</div><div><br /></div><div>At this point I&#8217;m thinking a simpler solution based directly on RubyGems alone might work.  It should be possible to manually resolve dependencies at package time, and use a different mechanism to load them up at runtime.</div><div><br /></div><div>It looks like a project called Isolate might be the right fit:</div><div><br /></div><div><a href="http://www.rubyinside.com/isolate-simple-per-project-rubygem-sandboxing-3461.html">http://www.rubyinside.com/isolate-simple-per-project-rubygem-sandboxing-3461.html</a></div><div><a href="https://github.com/jbarnette/isolate">https://github.com/jbarnette/isolate</a></div><div><br /></div><div><b style="font-style: italic; ">Update: </b>I converted the project over to Isolate, and it appears to be working fine.  Addon gems can be dropped right into the main program vendor location, and they will be found by the main Isolate.now! invocation, with no qualms.</div></div></div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/01/24/Bootstrap-Drupal-6.20-on-Quercus/">Bootstrap Drupal 6.20 on Quercus</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-24T02:08:00-05:00" pubdate data-updated="true">Jan 24<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Here&#8217;s a script to get up and running quickly with Drupal 6.20 on <a href="http://www.caucho.com/resin-3.0/quercus/">Quercus</a>:</p><br /><br /><script src="https://gist.github.com/792938.js"> </script></div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -118,8 +435,41 @@
         <a href="/blog/2011/12/30/hello-octopress-world/">hello octopress world</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2011/07/22/Latest-Capybara-and-Selenium/">Latest Capybara and Selenium</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/Monads-in-Java/">Monads in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/Increasing-processes%2C-sessions-and-transactions-in-Oracle-XE/">Increasing processes, sessions and transactions in Oracle XE</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/05/01/The-Curiously-Recurring-Installation-Pattern%2A/">The Curiously Recurring Installation Pattern*</a>
+      </li>
+    
   </ul>
 </section>
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("_aaron_", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/_aaron_" class="twitter-follow-button" data-show-count="false">Follow @_aaron_</a>
+  
+</section>
+
 
 <section>
   <h1>Github Repos</h1>
@@ -141,7 +491,7 @@
 
         github.showRepos({
             user: 'ahamid',
-            count: 0,
+            count: 10,
             skip_forks: true,
             target: '#gh_repos'
         });
@@ -149,7 +499,6 @@
   </script>
   <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
-
 
 
 

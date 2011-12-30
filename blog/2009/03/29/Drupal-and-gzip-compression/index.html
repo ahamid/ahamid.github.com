@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>hello octopress world - Devoured By Lions</title>
+  <title>Drupal and gzip compression - Devoured By Lions</title>
   <meta name="author" content="aaron">
 
   
-  <meta name="description" content="i for one welcome my new cephalopod overlords
-">
+  <meta name="description" content="In the process of trying to get the Drupal Image module -based gallery working I discovered my PHP GD did not support jpeg images. I upgraded to PHP &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world">
+  <link rel="canonical" href="http://ahamid.github.com/blog/2009/03/29/Drupal-and-gzip-compression">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -68,7 +67,7 @@
   
   <header>
     
-      <h1 class="entry-title">Hello Octopress World</h1>
+      <h1 class="entry-title">Drupal and Gzip Compression</h1>
     
     
       <p class="meta">
@@ -84,15 +83,14 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2009-03-29T15:54:00-04:00" pubdate data-updated="true">Mar 29<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>i for one welcome my new cephalopod overlords</p>
-</div>
+<div class="entry-content">In the process of trying to get the Drupal Image module -based gallery working I discovered my PHP GD did not support jpeg images.  I upgraded to PHP 5.2.9 in the process, enabling jpeg support as well as gzip/zlib.  For the two existing Drupal sites I had up, and for which I had enabled caching and compression under the Performance settings, all of a sudden Firefox started reporting a content encoding error and would not render content.  I suspected the gzip support I had just compiled in, and at first I thought this might be due to my reverse proxy configuration (by the way, <a href="http://vexabit.blogspot.com/2009/02/drupal-wont-install-behind-reverse.html">Drupal 6.10 installation worked through the proxy</a> just fine; I didn&#8217;t even realize this until afterwards).  However, I eventually determined (after reverting and reading the Performance settings details more closely) that Drupal applies the compression to the <span style="font-style:italic;">cached</span> content.  After I cleared the cache, the sites started working again.  Some testing with wget revealed what clearly was happening: Drupal was claiming the cached content was gzipped when it really wasn&#8217;t, because at the time it was cached, gzip support wasn&#8217;t available (even though the option was enabled in the Drupal settings).<br /><br />So galleries are working now.  For some reason I had to set Thickbox to use the &#8216;Original&#8217; image and not the &#8216;Preview&#8217; which is the default.  I don&#8217;t know what the difference is - &#8216;Original&#8217; sounds like what one would want anyway.</div>
 
 
   <footer>
@@ -114,15 +112,21 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2009-03-29T15:54:00-04:00" pubdate data-updated="true">Mar 29<span>th</span>, 2009</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/drupal/'>drupal</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2009/03/29/Drupal-and-gzip-compression/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2009/03/29/Drupal-and-gzip-compression/" >Tweet</a>
   
   
   
@@ -131,8 +135,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/07/22/Latest-Capybara-and-Selenium/" title="Previous Post: Latest Capybara and Selenium">&laquo; Latest Capybara and Selenium</a>
+        <a class="basic-alignment left" href="/blog/2009/02/20/Drupal-won%27t-install-behind-a-reverse-proxy/" title="Previous Post: Drupal won't install behind a reverse proxy">&laquo; Drupal won't install behind a reverse proxy</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2009/04/12/Initial-survey-of-the-Ruby-landscape/" title="next Post: Initial survey of the Ruby landscape">Initial survey of the Ruby landscape &raquo;</a>
       
     </p>
   </footer>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: quercus | Devoured By Lions]]></title>
+  <link href="http://ahamid.github.com/blog/categories/quercus/atom.xml" rel="self"/>
+  <link href="http://ahamid.github.com/"/>
+  <updated>2011-12-30T15:11:26-05:00</updated>
+  <id>http://ahamid.github.com/</id>
+  <author>
+    <name><![CDATA[aaron]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Quercus and Drupal 6.9 regression]]></title>
+    <link href="http://ahamid.github.com/blog/2009/02/15/Quercus-and-Drupal-6.9-regression/"/>
+    <updated>2009-02-15T22:35:00-05:00</updated>
+    <id>http://ahamid.github.com/blog/2009/02/15/Quercus-and-Drupal-6.9-regression</id>
+    <content type="html"><![CDATA[<p>A regression must have been introduced in Drupal 6.9 because I went to give it a spin tonight on Tomcat 6 (just placing the Quercus libs in Tomcat WEB-INF/lib and configuring the database connection in the META-INF/context.xml), and the install failed with a warning about UTF/UNICODE encoding, weird IO errors, and printing "SHOW SERVER_VERSION", finally warning that the version of PostgreSQL was not supported (even though it is 8+).  There appear to have been some changes in how the PostgreSQL version is detected, but even after commenting that check right out of the PostgreSQL database support file, the install fails.<br /><br />I downloaded a fresh Drupal 6.2 and that did install (although it also gives a customary error at the end of installation...but it does create and initialize the tables in the database).<br /><br />So I guess I'll chalk it up to a difference between the versions.  Hopefully it will be fixed (I may have to do more research) because Drupal 6.2 displays a red error indicating that it needs to be upgraded because of a security risk.<br /><br />Update: it looks like <a href="http://www.grails.org/PHP+Plugin">someone else has run into this</a></p>
+]]></content>
+  </entry>
+  
+</feed>

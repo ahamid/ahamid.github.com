@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Apache configuration - Devoured By Lions</title>
+  <meta name="author" content="aaron">
+
+  
+  <meta name="description" content="One frustrating thing about Apache is how unamenable its configuration system is to parameterization, generalization, and reuse. To start with, even &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ahamid.github.com/blog/2009/02/14/Apache-configuration">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Devoured By Lions" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Devoured By Lions</a></h1>
+  
+    <h2>the eternal struggle to tame complexity</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ahamid.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Apache Configuration</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-14T18:42:00-05:00" pubdate data-updated="true">Feb 14<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content">One frustrating thing about Apache is how unamenable its configuration system is to parameterization, generalization, and reuse.  To start with, even in the simplest Apache configuration one typically wants to parameterize the configuration file that Apache uses, and the stock <code>apachectl</code> has meagre support for parameterization (although it does source the <code>envvars</code> file; this mechanism is still hard to use to support multiple separate configurations).  But beyond the wrapper script (which I think most people just copy, modify or rewrite entirely anyway), there is no consistent variable/parameter expansion support in the configuration system.  Sure, specific modules and directives support some for of parameterization, but they are usually bespoke, awkward and incompatible with each other (the prime culprit being mod_rewrite which is its own adhoc language).  Here is a short list of some of the inconsistent parameterization capabilities:<br /><br />* <a href="http://httpd.apache.org/docs/2.2/env.html">&#8220;environment&#8221; variables</a><br />* <a href="http://httpd.apache.org/docs/2.2/mod/core.html#ifdefine">Defines</a><br />* <a href="http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html#rewritecond">mod_rewrite RewriteRule and RewriteCond backreferences</a><br />* <a href="http://httpd.apache.org/docs/2.2/mod/mod_vhost_alias.html">Parameter expansion in mod_vhost_alias</a><br /><br />I am currently trying to design and implement an architecture that consists of a frontend Apache instance that proxies to backend user Apache instances (from my current mess which is single Apache instance where I tried in vain to apply various inconsistent parameterization approaches above to allow multiple users to share the same Apache instance; ultimately I decided true isolation is really the best and simpler approach).  This is almost complete however my last stumbling block is how to compose the backend user Apache config from a large stock configuration plus a minimal (would be unnecessary if the main config could be properly parameterized!) user config that specifies User/Group and Listen port.<br /><br />First I thought I could have the master config include every user config, but wrap each user config with a define that ensures only the proper config is used.  E.g.:<br /><br /><code>httpd -f backend.conf -DUSER_FOO</code><br /><br /><code>master.conf: Include users/*.inc</code><br /><br /><code><pre><br />&lt;IfDefine USER_FOO&gt<br />...<br /></pre></code><br /><br />This actually works, although I realized one drawback is that each user&#8217;s config must be readable by all other users.  Apache will not start up if one of the includes is unreadable.  This also renders the conditional configuration moot.<br /><br />My second attempt was to have the main Apache config include a generic user config at a fixed location:<br /><br /><code>Include user.inc</code><br /><br />A setup script ensures that the correct user config is linked in the location that their Apache instance will ultimately find.  Read access to each user&#8217;s config can be restricted.  However this requires a yet another manual (well, it&#8217;s automated, but it&#8217;s still superfluous) configuration step.<br /><br />My last attempt was to use Apache&#8217;s <code>-f</code> flag to specify <b>two</b> configuration files on the command line.<br /><br /><code>httpd -f backend.conf -f user_foo.conf</code><br /><br />This theoretically offers the benefit that each user&#8217;s Apache server root (each user must have their own ServerRoot because, yet again, Apache configuration is not parameterizable enough to use a shared root) can be identical.  This superficially appears to work&#8230;however I discovered that it doesn&#8217;t really work because the two config files are not actually composed in the way I would expect (that is, both parsed under the same context such that the second and subsequent config files observe configuration set by preceding files).  In <b><i>reality</i></b> what happens is that each file is parsed independently and instead of previously parsed configuration being observed, the built-in Apache defaults are used.  That means, for example, if you set the DocumentRoot in one config file, but <b><i>omit</i></b> it in the next&#8230;it doesn&#8217;t actually get used.  The omission in the second file causes the default to override the previously parsed value!<br /><br />So ultimately I&#8217;m going to have to revert to strategy #2.<br /><br />If the Apache config just supported a consistent parameter expansion syntax throughout (e.g. like a pre-processor, so that support doesn&#8217;t have to be manually implemented in every single directive) I suspect that most of the configuration could be boiled down to a single shared config file.  (Yes I realize that pre-processor parameter expansion is not alone sufficient since things need to be parameterized at runtime as well; but that is not the type of parameterization needed for the above scheme).  Other Apache products (Ant, Maven, Tomcat, etc.; all Java based&#8230;) seem to support this type of parameterization.<br /><br />I remember seeing a Google Summer of Code proposal for redesigning the Apache config so maybe there is some hope (although I can no longer find any reference to it).
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">aaron</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-14T18:42:00-05:00" pubdate data-updated="true">Feb 14<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/apache/'>apache</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2009/02/14/Apache-configuration/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2009/02/14/Apache-configuration/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2009/02/05/Python-2.4-and-cookies/" title="Previous Post: Python 2.4 and cookies">&laquo; Python 2.4 and cookies</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2009/02/15/Quercus-and-Drupal-6.9-regression/" title="next Post: Quercus and Drupal 6.9 regression">Quercus and Drupal 6.9 regression &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/12/30/hello-octopress-world/">hello octopress world</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/22/Latest-Capybara-and-Selenium/">Latest Capybara and Selenium</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/Monads-in-Java/">Monads in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/Increasing-processes%2C-sessions-and-transactions-in-Oracle-XE/">Increasing processes, sessions and transactions in Oracle XE</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/05/01/The-Curiously-Recurring-Installation-Pattern%2A/">The Curiously Recurring Installation Pattern*</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("_aaron_", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/_aaron_" class="twitter-follow-button" data-show-count="false">Follow @_aaron_</a>
+  
+</section>
+
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ahamid">@ahamid</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ahamid',
+            count: 10,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - aaron -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

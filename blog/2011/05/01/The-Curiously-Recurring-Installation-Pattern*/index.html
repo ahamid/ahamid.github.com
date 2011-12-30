@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>hello octopress world - Devoured By Lions</title>
+  <title>The Curiously Recurring Installation Pattern* - Devoured By Lions</title>
   <meta name="author" content="aaron">
 
   
-  <meta name="description" content="i for one welcome my new cephalopod overlords
-">
+  <meta name="description" content="Once again I find myself installing a piece of *nix software, only to struggle against its blind insistence on being installed in the bowels of my &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world">
+  <link rel="canonical" href="http://ahamid.github.com/blog/2011/05/01/The-Curiously-Recurring-Installation-Pattern%2A">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -68,7 +67,7 @@
   
   <header>
     
-      <h1 class="entry-title">Hello Octopress World</h1>
+      <h1 class="entry-title">The Curiously Recurring Installation Pattern*</h1>
     
     
       <p class="meta">
@@ -84,15 +83,14 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2011-05-01T16:20:00-04:00" pubdate data-updated="true">May 1<span>st</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>i for one welcome my new cephalopod overlords</p>
-</div>
+<div class="entry-content">Once again I find myself installing a piece of *nix software, only to struggle against its blind insistence on being installed in the bowels of my system.  It goes something like this:<br /><br />* ./configure # let it use the default path because we will rewrite the dest dir on install and stow it (ha ha.)<br />* make<br />* make install DESTDIR=&#8221;/my/software&#8221;<br /><br />Depending on the software build system, this may or may not work.  (see: http://www.ruby-forum.com/topic/818302).  If it doesn&#8217;t, well, it&#8217;s your lucky day.  You do have all the output in your terminal scrollback right?  Good, &#8216;cause you&#8217;ll need to go and manually remove every last file it installed and try again.<br /><br />If DESTDIR worked, you may be able to stow now:<br /><br />* sudo stow -t /usr/local -d /my/software awesome-app<br /><br />Except of course if the build system installed in this brilliant fashion: /my/software/usr/local/&#8230;  Oops!  Time to clean up again!  (if you are brave/foolish you can certainly try &#8216;stow -t / -d /my/software awesome-app&#8217; instead. Good luck with that.)<br /><br />* cd /my/software/awesome-app<br />* mv usr/local/* .<br />* rm -r usr/local<br />* cd ..<br />* sudo stow -t /usr/local -d /my/software awesome-app<br /><br />Since this is such a colossal PITA, in some cases wrappers have been developed that essentially put a big condom around builds and allow you to manage them like a sane, normal user, in your own directory.  Some examples are RVM, the Ruby Version Manager, NVM, the Node Version Manager (takes care of NPM as well), and PythonBrew (an RVM equivalent for Python).  While these are absolute life-savers, they are really covering up an underlying flaw which is that a lot of *nix software is built to install only into the global system (which frankly is mystifying given *nix&#8217;s heritage of strong user/system separation.  maybe it&#8217;s just a legacy of the traditional *nix tool chain).<br /><br />(* http://en.wikipedia.org/wiki/Curiously_recurring_template_pattern)</div>
 
 
   <footer>
@@ -114,7 +112,7 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2011-05-01T16:20:00-04:00" pubdate data-updated="true">May 1<span>st</span>, 2011</time>
       
 
 
@@ -122,7 +120,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2011/05/01/The-Curiously-Recurring-Installation-Pattern%2A/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2011/05/01/The-Curiously-Recurring-Installation-Pattern%2A/" >Tweet</a>
   
   
   
@@ -131,8 +129,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/07/22/Latest-Capybara-and-Selenium/" title="Previous Post: Latest Capybara and Selenium">&laquo; Latest Capybara and Selenium</a>
+        <a class="basic-alignment left" href="/blog/2011/04/08/ruby-oci8-on-Fedora-x86_64/" title="Previous Post: ruby-oci8 on Fedora x86_64">&laquo; ruby-oci8 on Fedora x86_64</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2011/06/10/Increasing-processes%2C-sessions-and-transactions-in-Oracle-XE/" title="next Post: Increasing processes, sessions and transactions in Oracle XE">Increasing processes, sessions and transactions in Oracle XE &raquo;</a>
       
     </p>
   </footer>

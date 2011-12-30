@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>hello octopress world - Devoured By Lions</title>
+  <title>Quercus and Drupal 6.9 regression - Devoured By Lions</title>
   <meta name="author" content="aaron">
 
   
-  <meta name="description" content="i for one welcome my new cephalopod overlords
-">
+  <meta name="description" content="A regression must have been introduced in Drupal 6.9 because I went to give it a spin tonight on Tomcat 6 (just placing the Quercus libs in Tomcat &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world">
+  <link rel="canonical" href="http://ahamid.github.com/blog/2009/02/15/Quercus-and-Drupal-6.9-regression">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -68,7 +67,7 @@
   
   <header>
     
-      <h1 class="entry-title">Hello Octopress World</h1>
+      <h1 class="entry-title">Quercus and Drupal 6.9 Regression</h1>
     
     
       <p class="meta">
@@ -84,14 +83,14 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2009-02-15T22:35:00-05:00" pubdate data-updated="true">Feb 15<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>i for one welcome my new cephalopod overlords</p>
+<div class="entry-content">A regression must have been introduced in Drupal 6.9 because I went to give it a spin tonight on Tomcat 6 (just placing the Quercus libs in Tomcat WEB-INF/lib and configuring the database connection in the META-INF/context.xml), and the install failed with a warning about UTF/UNICODE encoding, weird IO errors, and printing &#8220;SHOW SERVER_VERSION&#8221;, finally warning that the version of PostgreSQL was not supported (even though it is 8+).  There appear to have been some changes in how the PostgreSQL version is detected, but even after commenting that check right out of the PostgreSQL database support file, the install fails.<br /><br />I downloaded a fresh Drupal 6.2 and that did install (although it also gives a customary error at the end of installation&#8230;but it does create and initialize the tables in the database).<br /><br />So I guess I&#8217;ll chalk it up to a difference between the versions.  Hopefully it will be fixed (I may have to do more research) because Drupal 6.2 displays a red error indicating that it needs to be upgraded because of a security risk.<br /><br />Update: it looks like <a href="http://www.grails.org/PHP+Plugin">someone else has run into this</a>
 </div>
 
 
@@ -114,15 +113,21 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2009-02-15T22:35:00-05:00" pubdate data-updated="true">Feb 15<span>th</span>, 2009</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/drupal/'>drupal</a>, <a class='category' href='/blog/categories/postgres/'>postgres</a>, <a class='category' href='/blog/categories/quercus/'>quercus</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2009/02/15/Quercus-and-Drupal-6.9-regression/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2009/02/15/Quercus-and-Drupal-6.9-regression/" >Tweet</a>
   
   
   
@@ -131,8 +136,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/07/22/Latest-Capybara-and-Selenium/" title="Previous Post: Latest Capybara and Selenium">&laquo; Latest Capybara and Selenium</a>
+        <a class="basic-alignment left" href="/blog/2009/02/14/Apache-configuration/" title="Previous Post: Apache configuration">&laquo; Apache configuration</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2009/02/20/Drupal-won%27t-install-behind-a-reverse-proxy/" title="next Post: Drupal won't install behind a reverse proxy">Drupal won't install behind a reverse proxy &raquo;</a>
       
     </p>
   </footer>

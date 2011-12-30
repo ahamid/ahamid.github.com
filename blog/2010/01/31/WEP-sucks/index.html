@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>hello octopress world - Devoured By Lions</title>
+  <title>WEP sucks - Devoured By Lions</title>
   <meta name="author" content="aaron">
 
   
-  <meta name="description" content="i for one welcome my new cephalopod overlords
-">
+  <meta name="description" content="WEP sucks. I lost probably around four hours last weekend trying to configure WEP on a router with a repeater. Typically setting up just WEP is not &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world">
+  <link rel="canonical" href="http://ahamid.github.com/blog/2010/01/31/WEP-sucks">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -68,7 +67,7 @@
   
   <header>
     
-      <h1 class="entry-title">Hello Octopress World</h1>
+      <h1 class="entry-title">WEP Sucks</h1>
     
     
       <p class="meta">
@@ -84,15 +83,14 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2010-01-31T12:45:00-05:00" pubdate data-updated="true">Jan 31<span>st</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>i for one welcome my new cephalopod overlords</p>
-</div>
+<div class="entry-content">WEP sucks.  I lost probably around four hours last weekend trying to configure WEP on a router with a repeater.  Typically setting up <span style="font-style:italic;">just<span style="font-weight:bold;"></span></span> WEP is not that difficult, but introduce a repeater, from a different vendor, and now the complexity multiplies.  It did not help that the machine that needed access via the repeater was physically located on a different floor, making debugging very time consuming.<br /><br />Every time I need to configure WEP, which happens to be so infrequently that I forget the particular rites necessary, I&#8217;m mystified by the inept and complicated protocol and user interfaces.<br /><br />The most important thing to realize is that if your router vendor supplies a &#8220;passphrase&#8221;-based key generation option, this has <span style="font-style:italic;">nothing</span>, <span style="font-weight:bold;">nothing</span> to do with ASCII keys.  Hex and ASCII of course are just different encodings of data.  The &#8220;passphrase&#8221; is converted via a &#8220;de facto&#8221; (although undocumented as far as I can tell) algorithm into the WEP key.  I suppose the rationale behind this is that users cannot fathom providing the key directly, which may be fair.  However this distinction between &#8220;passphrase&#8221; and generated key is generally completely obscured.  To further complicate things, the key generation algorithm apparently generates not one key, but <span style="font-weight:bold;">FOUR</span> keys.  How helpful!<br /><br />Here are a couple of independent WEP key generators:<br /><br />* <a href="http://www.powerdog.com/wepkey.cgi">http://www.powerdog.com/wepkey.cgi</a><br />* <a href="http://www.csgnetwork.com/wepgeneratorcalc.html">http://www.csgnetwork.com/wepgeneratorcalc.html</a><br /><br /><span style="font-style:italic;">(note, with a sample pass phrase I tested, these disagreed on the generated 128 bit key!)</span><br /><br />Now, let&#8217;s say you&#8217;ve generated or selected such a key.  Now comes the fun of entering it into the wireless client.  What do you think you are supposed to enter?  Of course it depends!  You can enter your passphrase, or you can enter the hex key.  Depending on client one or the other will magically work.  You may have a client which obscures this distinction from you so again, it&#8217;s not really clear what you are supposed to enter.<br /><br />I discovered that on Windows XP, if you are entering the WEP key directly as hex, that you need to prefix the key with <span style="font-weight:bold;">$</span>.  How <span style="font-style:italic;">intuitive</span>!  It is also rumored that if you are entering the passphrase, that it must be quoted.  Although I don&#8217;t remember ever having to quote a passphrase before.<br /><br /><a href="http://www.justanswer.com/questions/1yczg-trying-to-set-up-a-wireless-net-work-at-home-desktop-pc-has">http://www.justanswer.com/questions/1yczg-trying-to-set-up-a-wireless-net-work-at-home-desktop-pc-has</a><br /><br />Oh, and that is not to mention that (surprise!) there are <span style="font-style:italic;"><span style="font-weight:bold;">two</span></span> styles of WEP (both suck), &#8220;open&#8221; and &#8220;shared&#8221;.  If you are lucky this will be irrelevant.  If you are not, you will get to find out.</div>
 
 
   <footer>
@@ -114,7 +112,7 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2010-01-31T12:45:00-05:00" pubdate data-updated="true">Jan 31<span>st</span>, 2010</time>
       
 
 
@@ -122,7 +120,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2010/01/31/WEP-sucks/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2010/01/31/WEP-sucks/" >Tweet</a>
   
   
   
@@ -131,8 +129,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/07/22/Latest-Capybara-and-Selenium/" title="Previous Post: Latest Capybara and Selenium">&laquo; Latest Capybara and Selenium</a>
+        <a class="basic-alignment left" href="/blog/2010/01/23/Linux-and-FLOSS/" title="Previous Post: Linux and FLOSS">&laquo; Linux and FLOSS</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2010/02/23/Configuring-Bash-on-OS-X/" title="next Post: Configuring Bash on OS X">Configuring Bash on OS X &raquo;</a>
       
     </p>
   </footer>

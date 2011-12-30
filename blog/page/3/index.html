@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Devoured By Lions</title>
+  <meta name="author" content="aaron">
+
+  
+  <meta name="description" content="The last week or so I have been trying to learn a bit about Ruby and Ruby on Rails, and evaluate both of these in light of an existing project for &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ahamid.github.com/blog/page/3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Devoured By Lions" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Devoured By Lions</a></h1>
+  
+    <h2>the eternal struggle to tame complexity</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ahamid.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/04/12/Initial-survey-of-the-Ruby-landscape/">Initial Survey of the Ruby Landscape</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-12T11:36:00-04:00" pubdate data-updated="true">Apr 12<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">The last week or so I have been trying to learn a bit about Ruby and Ruby on Rails, and evaluate both of these in light of an existing project for which I have been to date using Java technologies (in particular, rich web frameworks (~ GWT/ITMill) and ORM (JPA + Derby)).  Here&#8217;s what I have surmised so far:<br /><br />* Ruby is a great, dynamic, and fun (!) language.  However the state of release management, and fracturing of incompatible implementations and platforms is a little concerning.<br />* Ruby on Rails does a few important things that make it really fast to develop with: 1) for a certain class of application, it makes all the right major decisions for you so you have less mental noise to deal with - the stack is fully integrated 2) provides scripts to automate development 3) the philosophy is to exploit the utility of the Ruby language for all aspects of the framework, so again, there is less mental baggage to deal with (no XML schemas to remember, no extra config file syntaxes).  It actually seems quite a bit like Django.<br />* RoR is plainly targeted towards mass public web sites.  Scaling RoR eventually typically involves introducing a bunch of different technologies (somewhat diluting the uniformity effect above).  So far I haven&#8217;t found support for developing, for example, portable downloadable applications in RoR.  But&#8230;<br />* One of the best things about Ruby is JRuby.  Apparently it is the leading implementation now, which is great, because it connects Ruby to the wealth of existing Java-based technologies.  This also potentially provides the one-click download/run that is possible with Java.  There are tools that allow packaging up (j)RoR applications as a Java applications.  So JRuby + RoR + Derby + Warbler == instantly portable RoR bundle.<br /><br />I look forward to trying RoR and packaging as a Derby-based Java application to see if the claimed productivity benefits (developer from Competitious claims in seriousness &#8220;100x&#8221;) can translate over to the Java platform.<br /><br />In addition, I&#8217;d like to try out Heroku.  It would be cool to develop both for JRoR, and Heroku.  Unfortunately I couldn&#8217;t install Heroku via JRuby, as it appears to require some native integration (so I guess one just needs to use native Ruby when working with Heroku).<br /><br />On a related note, Mats has said that re-using an existing VM does not save as much work as one would think, but still, it appears to me there are great benefits to doing that (in addition to JRuby there is IronRuby on CLR).  Granted the JVM does not (yet) have good dynamic language support, but once you get to a single VM there so many more possibilities and a more efficient focus of resources (e.g. on optimizing or porting the VM).  Really, how many client-side database drivers do folks need to be rewriting over and over again.  Let&#8217;s face it, most programming languages are just a slightly different permutation of features which push the same bits around.</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/03/29/Drupal-and-gzip-compression/">Drupal and Gzip Compression</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-03-29T15:54:00-04:00" pubdate data-updated="true">Mar 29<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">In the process of trying to get the Drupal Image module -based gallery working I discovered my PHP GD did not support jpeg images.  I upgraded to PHP 5.2.9 in the process, enabling jpeg support as well as gzip/zlib.  For the two existing Drupal sites I had up, and for which I had enabled caching and compression under the Performance settings, all of a sudden Firefox started reporting a content encoding error and would not render content.  I suspected the gzip support I had just compiled in, and at first I thought this might be due to my reverse proxy configuration (by the way, <a href="http://vexabit.blogspot.com/2009/02/drupal-wont-install-behind-reverse.html">Drupal 6.10 installation worked through the proxy</a> just fine; I didn&#8217;t even realize this until afterwards).  However, I eventually determined (after reverting and reading the Performance settings details more closely) that Drupal applies the compression to the <span style="font-style:italic;">cached</span> content.  After I cleared the cache, the sites started working again.  Some testing with wget revealed what clearly was happening: Drupal was claiming the cached content was gzipped when it really wasn&#8217;t, because at the time it was cached, gzip support wasn&#8217;t available (even though the option was enabled in the Drupal settings).<br /><br />So galleries are working now.  For some reason I had to set Thickbox to use the &#8216;Original&#8217; image and not the &#8216;Preview&#8217; which is the default.  I don&#8217;t know what the difference is - &#8216;Original&#8217; sounds like what one would want anyway.</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/02/20/Drupal-won%27t-install-behind-a-reverse-proxy/">Drupal Won&#8217;t Install Behind a Reverse Proxy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-20T01:30:00-05:00" pubdate data-updated="true">Feb 20<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">After having tried repeatedly to install Drupal 6.9 against Apache + mod_php + postgresql (assuming that I should get with the program and run it on its native platform instead of Quercus/Tomcat), then falling back to 6.8, then losing all hope when even 6.2 still hung on &#8220;Initializing.&#8221; despite all my efforts (and countless rebuilds of PHP), I <b><i>finally</i></b> decided I should probably give it one last try directly served by Apache as opposed to in a reverse proxy configuration.<br /><br />And the install worked off the bat.<br /><br />So if you are struggling to install Drupal and are about to give up in disgust, make sure you are not in a reverse proxy configuration.  Why this doesn&#8217;t actually work I have no idea.  I don&#8217;t see reverse proxy options in the administrative settings, so I&#8217;m not sure how/whether I should configure them even though I see them in the config file.</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/02/15/Quercus-and-Drupal-6.9-regression/">Quercus and Drupal 6.9 Regression</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-15T22:35:00-05:00" pubdate data-updated="true">Feb 15<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">A regression must have been introduced in Drupal 6.9 because I went to give it a spin tonight on Tomcat 6 (just placing the Quercus libs in Tomcat WEB-INF/lib and configuring the database connection in the META-INF/context.xml), and the install failed with a warning about UTF/UNICODE encoding, weird IO errors, and printing &#8220;SHOW SERVER_VERSION&#8221;, finally warning that the version of PostgreSQL was not supported (even though it is 8+).  There appear to have been some changes in how the PostgreSQL version is detected, but even after commenting that check right out of the PostgreSQL database support file, the install fails.<br /><br />I downloaded a fresh Drupal 6.2 and that did install (although it also gives a customary error at the end of installation&#8230;but it does create and initialize the tables in the database).<br /><br />So I guess I&#8217;ll chalk it up to a difference between the versions.  Hopefully it will be fixed (I may have to do more research) because Drupal 6.2 displays a red error indicating that it needs to be upgraded because of a security risk.<br /><br />Update: it looks like <a href="http://www.grails.org/PHP+Plugin">someone else has run into this</a>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/02/14/Apache-configuration/">Apache Configuration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-14T18:42:00-05:00" pubdate data-updated="true">Feb 14<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">One frustrating thing about Apache is how unamenable its configuration system is to parameterization, generalization, and reuse.  To start with, even in the simplest Apache configuration one typically wants to parameterize the configuration file that Apache uses, and the stock <code>apachectl</code> has meagre support for parameterization (although it does source the <code>envvars</code> file; this mechanism is still hard to use to support multiple separate configurations).  But beyond the wrapper script (which I think most people just copy, modify or rewrite entirely anyway), there is no consistent variable/parameter expansion support in the configuration system.  Sure, specific modules and directives support some for of parameterization, but they are usually bespoke, awkward and incompatible with each other (the prime culprit being mod_rewrite which is its own adhoc language).  Here is a short list of some of the inconsistent parameterization capabilities:<br /><br />* <a href="http://httpd.apache.org/docs/2.2/env.html">&#8220;environment&#8221; variables</a><br />* <a href="http://httpd.apache.org/docs/2.2/mod/core.html#ifdefine">Defines</a><br />* <a href="http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html#rewritecond">mod_rewrite RewriteRule and RewriteCond backreferences</a><br />* <a href="http://httpd.apache.org/docs/2.2/mod/mod_vhost_alias.html">Parameter expansion in mod_vhost_alias</a><br /><br />I am currently trying to design and implement an architecture that consists of a frontend Apache instance that proxies to backend user Apache instances (from my current mess which is single Apache instance where I tried in vain to apply various inconsistent parameterization approaches above to allow multiple users to share the same Apache instance; ultimately I decided true isolation is really the best and simpler approach).  This is almost complete however my last stumbling block is how to compose the backend user Apache config from a large stock configuration plus a minimal (would be unnecessary if the main config could be properly parameterized!) user config that specifies User/Group and Listen port.<br /><br />First I thought I could have the master config include every user config, but wrap each user config with a define that ensures only the proper config is used.  E.g.:<br /><br /><code>httpd -f backend.conf -DUSER_FOO</code><br /><br /><code>master.conf: Include users/*.inc</code><br /><br /><code><pre><br />&lt;IfDefine USER_FOO&gt<br />...<br /></pre></code><br /><br />This actually works, although I realized one drawback is that each user&#8217;s config must be readable by all other users.  Apache will not start up if one of the includes is unreadable.  This also renders the conditional configuration moot.<br /><br />My second attempt was to have the main Apache config include a generic user config at a fixed location:<br /><br /><code>Include user.inc</code><br /><br />A setup script ensures that the correct user config is linked in the location that their Apache instance will ultimately find.  Read access to each user&#8217;s config can be restricted.  However this requires a yet another manual (well, it&#8217;s automated, but it&#8217;s still superfluous) configuration step.<br /><br />My last attempt was to use Apache&#8217;s <code>-f</code> flag to specify <b>two</b> configuration files on the command line.<br /><br /><code>httpd -f backend.conf -f user_foo.conf</code><br /><br />This theoretically offers the benefit that each user&#8217;s Apache server root (each user must have their own ServerRoot because, yet again, Apache configuration is not parameterizable enough to use a shared root) can be identical.  This superficially appears to work&#8230;however I discovered that it doesn&#8217;t really work because the two config files are not actually composed in the way I would expect (that is, both parsed under the same context such that the second and subsequent config files observe configuration set by preceding files).  In <b><i>reality</i></b> what happens is that each file is parsed independently and instead of previously parsed configuration being observed, the built-in Apache defaults are used.  That means, for example, if you set the DocumentRoot in one config file, but <b><i>omit</i></b> it in the next&#8230;it doesn&#8217;t actually get used.  The omission in the second file causes the default to override the previously parsed value!<br /><br />So ultimately I&#8217;m going to have to revert to strategy #2.<br /><br />If the Apache config just supported a consistent parameter expansion syntax throughout (e.g. like a pre-processor, so that support doesn&#8217;t have to be manually implemented in every single directive) I suspect that most of the configuration could be boiled down to a single shared config file.  (Yes I realize that pre-processor parameter expansion is not alone sufficient since things need to be parameterized at runtime as well; but that is not the type of parameterization needed for the above scheme).  Other Apache products (Ant, Maven, Tomcat, etc.; all Java based&#8230;) seem to support this type of parameterization.<br /><br />I remember seeing a Google Summer of Code proposal for redesigning the Apache config so maybe there is some hope (although I can no longer find any reference to it).
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/02/05/Python-2.4-and-cookies/">Python 2.4 and Cookies</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-05T22:54:00-05:00" pubdate data-updated="true">Feb 5<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">Everytime I start liking Python&#8230;there has to be a downer.<br /><br /><blockquote><br />451             raise CookieError(&#8220;Attempt to set a reserved key: %s&#8221; % key)<br />452         if &#8220;&#8221; != translate(key, idmap, LegalChars):<br />453             raise CookieError(&#8220;Illegal key value: %s&#8221; % key)<br />454 <br />455         # It&#8217;s a good key, so save it.<br />global CookieError = <class Cookie.CookieError>, key = &#8216;ABC:123.123.123.123:XYZ&#8217;<br />CookieError: Illegal key value: ABC:123.123.123.123:XYZ <br />      args = (&#8216;Illegal key value: ABC:123.123.123.123:XYZ&#8217;,)</blockquote><br /><br />Really?  Apparently Python&#8217;s (at least the cruddy version I&#8217;m stuck with in RHEL 5) Cookie implementation is rather strict in the headers it will accept and will just blow up if there are characters that are not in the RFC.  <br /><br /><a href="http://markmail.org/message/bsabuonsslb4ybiz">http://markmail.org/message/bsabuonsslb4ybiz</a><br /><br />While I generally would agree that the implementation conform to the spec and indicate when the input is non-standard, I think just blowing up is rather harsh.  There have to be garbage cookies floating around there on the web.  Unfortunately this one is related to the single sign on system in front of my app.  So there are two fails here.<br /><br />So I guess I&#8217;m left to figure out a way to kill this cookie before Python sees it&#8230;most likely I&#8217;ll have to implement this as a mysterious hack in the config of the Apache instance that frontends it.  Unless I can sneak it into some WSGI layer.  But I&#8217;ll probably just hack it because my life and patience are finite.
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/2/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/12/30/hello-octopress-world/">hello octopress world</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/22/Latest-Capybara-and-Selenium/">Latest Capybara and Selenium</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/Monads-in-Java/">Monads in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/Increasing-processes%2C-sessions-and-transactions-in-Oracle-XE/">Increasing processes, sessions and transactions in Oracle XE</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/05/01/The-Curiously-Recurring-Installation-Pattern%2A/">The Curiously Recurring Installation Pattern*</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("_aaron_", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/_aaron_" class="twitter-follow-button" data-show-count="false">Follow @_aaron_</a>
+  
+</section>
+
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/ahamid">@ahamid</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ahamid',
+            count: 10,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - aaron -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Fixing a corrupted encrypted LVM partition - Devoured By Lions</title>
+  <meta name="author" content="aaron">
+
+  
+  <meta name="description" content="If you are desperate to recover your system skip down a few paragraphs to cut to the chase.I just went through this ordeal so I thought I would pass &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ahamid.github.com/blog/2011/01/07/Fixing-a-corrupted-encrypted-LVM-partition">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Devoured By Lions" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Devoured By Lions</a></h1>
+  
+    <h2>the eternal struggle to tame complexity</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ahamid.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Fixing a Corrupted Encrypted LVM Partition</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-07T13:38:00-05:00" pubdate data-updated="true">Jan 7<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><span style="font-weight:bold;">If you are desperate to recover your system skip down a few paragraphs to cut to the chase.</span><br /><br /><div style="text-align: justify;">I just went through this ordeal so I thought I would pass these notes along for the next traveler.  I have an <a href="http://www.linlap.com/wiki/msi+cr620">MSI CR620</a> running <a href="http://fedoraproject.org/get-fedora">Fedora 14</a>.  Everything has pretty much worked flawlessly on this machine (webcam, audio, wireless), except suspend/resume/hibernate has become flaky with the Fedora 14 kernels (2.6.35+).  I have therefore been running the last Fedora 13 kernel (2.6.34.mumble), with which I&#8217;ve had no suspend/resume/hiberate issues.  On the newer kernels, the machine will not resume correctly, and I have to hard-shutdown and start back up.  That&#8217;s the background.</div><br /><div style="text-align: justify;">Enter a new <a href="http://www.cyberpowersystems.com/products/ups-systems/intelligent-lcd-ups/CP1500PFCLCD.html">UPS</a> I purchased recently due to a suspicion that I have less than perfect utility input or wiring in the computer room.  So far I like this unit alot.  It comes with a USB cable and (Windows) software that displays UPS status and allows you to change configuration.  Great.</div><br /><div style="text-align: justify;">Well, I decided since it&#8217;s USB, I&#8217;ll just hook it up to my KVM and see what Linux thinks.  Initially it was great.  Fedora just recognized it, it showed up in the Gnome power management applet with battery status and all sorts of geeky statistics (graphs!).</div><br /><div style="text-align: justify;">Well.  At some point that changed, and I&#8217;m not sure why (possibly because both my Windows and Linux machine were on?).  The power applet seemed to always show 0.0% for battery charge.  Unfortunately, the power management scheme (at least what is accessible via a UI) has built-in action triggers for UPS status.  Want to guess what happens when it thinks your UPS battery is going run out?  Yeah.  Hibernate.  No.  You can&#8217;t tell it not to (at least via the UI).</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">Unfortunately I discovered this while <a href="http://yorba.org/shotwell/">Shotwell</a> was importing a bunch of my images (note: this does a massive amount of disk reads/writes).  Apparently this completely consumes CPU and memory and was a problem alone, without the machine trying to hibernate every few seconds.</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">The machine hibernated on me (I was using a more recent kernel because VirtualBox-OSE will not run on the old kernel, apparently only the newer kernel modules are available).  I went through the the cold shutdown reboot process (I had been doing it so frequently at this point this did not phase me at all).  When it booted, I was presented with this horrifying message:</div><br /><blockquote><span class="Apple-style-span">/var: UNEXPECTED INCONSISTENCY; RUN fsck MANUALLY.<br />(i.e., without -a or -p options)<br />[FAILED]<br />*** An error occurred &#8230;<br />*** Dropping you to a shell &#8230;<br />Give root password &#8230;</span></blockquote>My face: <span style="font-weight:bold;">D:</span><br /><div style="text-align: justify;"><br /></div><div style="text-align: justify;">This would be disconcerting enough.  But a little more background.  I use whole-drive encryption.  Since I dual-boot Windows and Linux, I use Truecrypt for the Windows half of my &#8220;whole drive&#8221; (I would consider just cannibalizing this partition, but, hey, I paid for that Windows license), and an LVM volume group with a LUKS-encrypted root and home partition.  I also set up <span style="font-weight:bold;">sudo</span> so that I can <span style="font-weight:bold;">sudo</span> to root.  I change the root password to a random strong password with <a href="http://www.ajs.com/~ajs/mkpasswd.html">mkpasswd</a> (this is in the &#8216;expect&#8217; package of all places).  Which I do not keep.  I figure I don&#8217;t ever really <span style="font-style:italic;">need</span> to log in as root right?  (Needless to say I have reconsidered this).</div><br />In any case, I don&#8217;t have my root password.<br /><br /><span style="font-weight:bold;">Useful info starts here.</span><br /><br /><div style="text-align: justify;">All is not lost, there actually isn&#8217;t anything that magical about LVM or LUKS encryption.  I owe a debt of gratitude to <span style="font-weight:bold;">nteon</span> and <span style="font-weight:bold;">hannes</span> in the <span style="font-weight:bold;">#fedora</span> channel on <a href="irc://freenode.net">Freenode</a>, because it <span style="font-weight:bold;"><span style="font-style:italic;">is</span></span> possible to recover in a fairly straightforward fashion from a situation like this:</div><br /><ul><li>Boot into a LiveCD (or some other CD that has LVM and LUKS support).  If you don&#8217;t have the media, well, you better have a machine with access to the net to get it.</li><li>Run &#8217;<b>cryptsetup luksOpen /dev/&lt;encrypted partition&gt;</b><devicename>&#8217; to &#8220;unlock&#8221; the LUKS partition on your LVM volume group.  This should prompt you for the encryption password.  You can also use the file browser (at least Nautilus on Gnome), or the Gnome Disk Utility app, to &#8220;unlock&#8221; the partition.  I believe these all mean and do the same thing, although I use the command line for to be absolutely sure.</devicename></li><li><devicename></devicename>Since the volume group was mounted manually, you will need to run a couple of other arcane commands to tell the system that <span style="font-style:italic;">no, really</span> they are actually there:</li><li>&#8217;<b>vgscan &#8211;mknodes</b>&#8217;.  This scans the LVM volume and makes device nodes for partitions.  You need device nodes to do anything with the partitions (like, say, <b>fsck</b> them).</li><li>&#8217;<b>vgchange -ay</b>&#8217;.  This tells the system to make all the volumes/partitions &#8220;active&#8221; (I don&#8217;t totally understand it, but I infer that volumes can be active and inactive)</li><li>Now you should have partition devices under &#8217;<b>/dev/&lt;volgroup&gt;</b><volgroupname><b>/&lt;partition names&gt;<partition></partition></b><partition name="">&#8217;.  They <span style="font-style:italic;">should</span> be recognizable, because you set them up and presumably named them.  My volume group was named after the machine (msicr620) and my partitions were named conventionally based on what they did (lv_root, lv_home; I think the install did that).</partition></volgroupname></li></ul><devicename><volgroupname><partition name="">Now you can &#8217;<b>fsck</b>&#8217; your partitions to figure out what is wrong:<br /><br /><ul><li><b>fsck /dev/vg_msicr620/lv_root</b></li><li><b>fsck /dev/vg_msicr620/lv_home</b></li><li><b><span class="Apple-style-span" style="font-weight: normal; "><b>fsck /dev/non_volgroup_partition</b></span></b></li><li>etc.</li></ul><div style="text-align: justify;">(if you know the file system type, you may want to try using the &#8217;<b>-t &lt;fstype&gt;</b><fstype>&#8217; flag.  I fscked several times, and I think fsck was able to figure out the type when I omitted it.).</fstype></div><fstype><div style="text-align: justify;"><br /></div><div style="text-align: justify;">In my case, apparently the sole problem with the partitions, and the cause of this entire ordeal, is that the superblock has a future date as the last mounted date.  I assume this was because I had enabled power management tracing (with &#8217;<b>echo 1 > /sys/power/pm_trace</b>&#8217;) as described in the <a href="http://fedoraproject.org/wiki/KernelCommonProblems#Suspend.2FResume_failure">Fedora common problems guide</a>, and this is noted to change the clock, some sequence of events must have left the last mounted date with the wrong time.</div><br /><div style="text-align: justify;">Once you are done fscking around you can reboot and boot from the HD.  If you did not have serious problems with the partitions, everything will be fine and you will boot into your system.  If, like me, you either do not have your root password, or have forgotten it, you can reset it by mounting your root volume when booted into the LiveCD, and editing your &#8216;/etc/shadow&#8217; file.  Obviously <span style="font-weight:bold;"><span style="font-style:italic;">do this with care</span></span>.  There are some different ways to reset your root password <a href="http://linuxgazette.net/107/tomar.html">here</a>.  Booting into single user mode did not work for me (probably related to corruption on the root volume).</div><br />To take forward:<br /><br /><ul><li>recovering from filesystem corruption of encrypted partitions is really no different than any other type of partition, there are just a few more steps to &#8220;open&#8221; the encrypted volume.  after that it&#8217;s pretty much the same process.  although it&#8217;s no less stressful.</li><li>if you set a synthetic root password, record it somewhere (like KeePass) because you may in fact need it</li><li>I&#8217;m glad I had established a frequent and comprehensive backup schedule (via Deja Dup).  It would not have been fun to lose this disk, but at least I had reliable backups.</li><li>investigate options that can make ext4 more reliable.  there has been some controversy over ext4, and after this I am totally not in a mood to sacrifice reliability for&#8230;anything, really</li><li><b>##fedora</b> is good people.  without them I probably would have rocked myself to sleep in a corner crying.</li><li>For now I have just disabled sleep and hibernate while running F14 kernels.  This is not a great situation but it&#8217;s better than constantly locking up the machine.  Since this worked basically flawlessly in the past, I assume it&#8217;s just a matter of time before the regression gets fixed.</li></ul></fstype></partition></volgroupname></devicename></div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">aaron</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-07T13:38:00-05:00" pubdate data-updated="true">Jan 7<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2011/01/07/Fixing-a-corrupted-encrypted-LVM-partition/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2011/01/07/Fixing-a-corrupted-encrypted-LVM-partition/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/01/05/Duplicity-on-Centos-5.5/" title="Previous Post: Duplicity on Centos 5.5">&laquo; Duplicity on Centos 5.5</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/01/24/Bootstrap-Drupal-6.20-on-Quercus/" title="next Post: Bootstrap Drupal 6.20 on Quercus">Bootstrap Drupal 6.20 on Quercus &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/12/30/hello-octopress-world/">hello octopress world</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/22/Latest-Capybara-and-Selenium/">Latest Capybara and Selenium</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/Monads-in-Java/">Monads in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/Increasing-processes%2C-sessions-and-transactions-in-Oracle-XE/">Increasing processes, sessions and transactions in Oracle XE</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/05/01/The-Curiously-Recurring-Installation-Pattern%2A/">The Curiously Recurring Installation Pattern*</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("_aaron_", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/_aaron_" class="twitter-follow-button" data-show-count="false">Follow @_aaron_</a>
+  
+</section>
+
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ahamid">@ahamid</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ahamid',
+            count: 10,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - aaron -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

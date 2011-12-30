@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Trials and Tribulations with Bundler - Devoured By Lions</title>
+  <meta name="author" content="aaron">
+
+  
+  <meta name="description" content="Bundler is awesome. But Bundler also sucks.I have been trying to devise a strategy for deploying pre-packaged addons to a Ruby program, but have &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ahamid.github.com/blog/2011/02/26/Trials-and-Tribulations-with-Bundler">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Devoured By Lions" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Devoured By Lions</a></h1>
+  
+    <h2>the eternal struggle to tame complexity</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ahamid.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Trials and Tribulations With Bundler</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-26T14:23:00-05:00" pubdate data-updated="true">Feb 26<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://www.usfunds.com/media/images/frank-talk-images/jul-dec2010/AustinPowers-070910.jpg"><img style="display:block; margin:0px auto 10px; text-align:center;cursor:pointer; cursor:hand;width: 350px; height: 207px;" src="http://www.usfunds.com/media/images/frank-talk-images/jul-dec2010/AustinPowers-070910.jpg" border="0" alt="" /></a><div style="text-align: left;"><br /></div><div style="text-align: left;">Bundler is awesome.  But Bundler also sucks.</div><div style="text-align: left;"><br /></div><div style="text-align: justify;">I have been trying to devise a strategy for deploying pre-packaged addons to a Ruby program, but have concluded, much to my surprise, that there is just no simple way to do this in the current Ruby ecosystem.  My needs are simple:</div><div style="text-align: left;"><ol><li>Deliver my addon code</li><li>Deliver any necessary dependencies with my addon code</li><li>Invoke this addon code from a main program <i>without additional a-priori configuration of the main program</i></li></ol><div style="text-align: justify;">The first stop is RubyGems.  Gems are great.  They are the quantum of dependency management in Ruby, and are analogous to Maven artifacts in the Java ecosystem.  An add-on is nominally equivalent to a gem.  The tricky part however is obtaining all the gem dependencies.  Unfortunately RubyGems only resolves dependencies during installation, so is not helpful in, say, <i>bundling </i>gems<i>.</i>  If we are to build our add-on as a gem, then that implies that we need to explicitly run a &#8220;gem install&#8221; command at deploy time, and we get whatever version of gem dependencies rubygems resolves at deploy time (also assuming the installation machine has network access).  This is not desirable.  Instead we would like to bundle all the necessary dependencies together with the addon.  This is where, you guessed it, Bundler comes in.</div><div><br /></div><div style="text-align: justify;">Bundler&#8217;s mandate is to perform dependency resolution and bundling, for <i>applications</i>.  The distinction between applications and libraries is very explicit, in contrast with Maven for example, in which dependency management is handled uniformly (applications are &#8220;packaged&#8221; the same way as libraries).  This is unfortunate and means that one must use the gem specification to specify library dependencies, and Bundler Gemfile to specify application dependencies.  Bundler <i>can</i> <a href="http://gembundler.com/rubygems.html">parse dependencies from gem specs however</a>.  Bundler cannot (yet?) handle nesting/composing Gemfiles (because it is only designed for top-level applications).  But with some subterfuge we can write something like this:</div><div><div></div><blockquote><div>source &#8220;http://rubygems.org&#8221;</div><div><br /></div><div>gem &#8220;json_pure&#8221;</div><div><br /></div><div>Dir.glob(File.dirname(__FILE__) + &#8216;/ext/*/Gemfile&#8217;) do |file|</div><div>  # evil</div><div>  eval File.new(file).read</div><div>end</div></blockquote><div></div></div><div>Here we have coerced our main Gemfile to load the contents of subordinate Gemfiles dynamically.  We can reconfigure our addon such that it is no longer a gem, but instead specifies its dependencies in its own Gemfile.</div><div><br /></div><div style="text-align: justify;">We cannot pat ourselves on the back however, because this cleverness only gets us so far (not that far).  Bundler resolves dependencies <i>statically</i>.  It requires the static generation of a <b>Gemfile.lock </b>file which contains the static graph of dependencies resolved at the time <b>bundle install</b> was run (even if all the dependencies are already present in the right locations).  So this is a dead end.  We cannot just drop down an addon with its own Gemfile and dependencies without statically re-resolving the entire dependency graph (<a href="https://gist.github.com/b8d47d4ca590e7b00539">see for more details</a>).</div><div><br /></div><div style="text-align: justify;">What have others done in this situation?  There are of course Ruby applications that support &#8220;plugins&#8221; of some sort.  The first one that came to mind was RedCar.  It turns out RedCar plugins typically include the source of any dependencies.  That is definitely one solution, however I would like to avoid that if possible.  It&#8217;s possible to &#8220;include&#8221; third party Git repos in your own Git repo via the submodule mechanism.  Unfortunately (to my knowledge) submodules do not support checking out specific paths.  Using submodules would require additional mechanisms to filter in/out the right repository content when packaging the plugin.</div><div><br /></div><div>At this point I&#8217;m thinking a simpler solution based directly on RubyGems alone might work.  It should be possible to manually resolve dependencies at package time, and use a different mechanism to load them up at runtime.</div><div><br /></div><div>It looks like a project called Isolate might be the right fit:</div><div><br /></div><div><a href="http://www.rubyinside.com/isolate-simple-per-project-rubygem-sandboxing-3461.html">http://www.rubyinside.com/isolate-simple-per-project-rubygem-sandboxing-3461.html</a></div><div><a href="https://github.com/jbarnette/isolate">https://github.com/jbarnette/isolate</a></div><div><br /></div><div><b style="font-style: italic; ">Update: </b>I converted the project over to Isolate, and it appears to be working fine.  Addon gems can be dropped right into the main program vendor location, and they will be found by the main Isolate.now! invocation, with no qualms.</div></div></div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">aaron</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-26T14:23:00-05:00" pubdate data-updated="true">Feb 26<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2011/02/26/Trials-and-Tribulations-with-Bundler/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2011/02/26/Trials-and-Tribulations-with-Bundler/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/01/24/Bootstrap-Drupal-6.20-on-Quercus/" title="Previous Post: Bootstrap Drupal 6.20 on Quercus">&laquo; Bootstrap Drupal 6.20 on Quercus</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/03/22/This-Software-shall-be-used-for-Good%2C-not-Evil/" title="next Post: This Software shall be used for Good, not Evil">This Software shall be used for Good, not Evil &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/12/30/hello-octopress-world/">hello octopress world</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/22/Latest-Capybara-and-Selenium/">Latest Capybara and Selenium</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/Monads-in-Java/">Monads in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/Increasing-processes%2C-sessions-and-transactions-in-Oracle-XE/">Increasing processes, sessions and transactions in Oracle XE</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/05/01/The-Curiously-Recurring-Installation-Pattern%2A/">The Curiously Recurring Installation Pattern*</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("_aaron_", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/_aaron_" class="twitter-follow-button" data-show-count="false">Follow @_aaron_</a>
+  
+</section>
+
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ahamid">@ahamid</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ahamid',
+            count: 10,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - aaron -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

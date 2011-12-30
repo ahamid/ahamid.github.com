@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: drupal | Devoured By Lions]]></title>
+  <link href="http://ahamid.github.com/blog/categories/drupal/atom.xml" rel="self"/>
+  <link href="http://ahamid.github.com/"/>
+  <updated>2011-12-30T15:11:26-05:00</updated>
+  <id>http://ahamid.github.com/</id>
+  <author>
+    <name><![CDATA[aaron]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Drupal and gzip compression]]></title>
+    <link href="http://ahamid.github.com/blog/2009/03/29/Drupal-and-gzip-compression/"/>
+    <updated>2009-03-29T15:54:00-04:00</updated>
+    <id>http://ahamid.github.com/blog/2009/03/29/Drupal-and-gzip-compression</id>
+    <content type="html"><![CDATA[<p>In the process of trying to get the Drupal Image module -based gallery working I discovered my PHP GD did not support jpeg images.  I upgraded to PHP 5.2.9 in the process, enabling jpeg support as well as gzip/zlib.  For the two existing Drupal sites I had up, and for which I had enabled caching and compression under the Performance settings, all of a sudden Firefox started reporting a content encoding error and would not render content.  I suspected the gzip support I had just compiled in, and at first I thought this might be due to my reverse proxy configuration (by the way, <a href="http://vexabit.blogspot.com/2009/02/drupal-wont-install-behind-reverse.html">Drupal 6.10 installation worked through the proxy</a> just fine; I didn't even realize this until afterwards).  However, I eventually determined (after reverting and reading the Performance settings details more closely) that Drupal applies the compression to the <span style="font-style:italic;">cached</span> content.  After I cleared the cache, the sites started working again.  Some testing with wget revealed what clearly was happening: Drupal was claiming the cached content was gzipped when it really wasn't, because at the time it was cached, gzip support wasn't available (even though the option was enabled in the Drupal settings).<br /><br />So galleries are working now.  For some reason I had to set Thickbox to use the 'Original' image and not the 'Preview' which is the default.  I don't know what the difference is - 'Original' sounds like what one would want anyway.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Drupal won't install behind a reverse proxy]]></title>
+    <link href="http://ahamid.github.com/blog/2009/02/20/Drupal-won%27t-install-behind-a-reverse-proxy/"/>
+    <updated>2009-02-20T01:30:00-05:00</updated>
+    <id>http://ahamid.github.com/blog/2009/02/20/Drupal-won't-install-behind-a-reverse-proxy</id>
+    <content type="html"><![CDATA[<p>After having tried repeatedly to install Drupal 6.9 against Apache + mod_php + postgresql (assuming that I should get with the program and run it on its native platform instead of Quercus/Tomcat), then falling back to 6.8, then losing all hope when even 6.2 still hung on "Initializing." despite all my efforts (and countless rebuilds of PHP), I <b><i>finally</i></b> decided I should probably give it one last try directly served by Apache as opposed to in a reverse proxy configuration.<br /><br />And the install worked off the bat.<br /><br />So if you are struggling to install Drupal and are about to give up in disgust, make sure you are not in a reverse proxy configuration.  Why this doesn't actually work I have no idea.  I don't see reverse proxy options in the administrative settings, so I'm not sure how/whether I should configure them even though I see them in the config file.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Quercus and Drupal 6.9 regression]]></title>
+    <link href="http://ahamid.github.com/blog/2009/02/15/Quercus-and-Drupal-6.9-regression/"/>
+    <updated>2009-02-15T22:35:00-05:00</updated>
+    <id>http://ahamid.github.com/blog/2009/02/15/Quercus-and-Drupal-6.9-regression</id>
+    <content type="html"><![CDATA[<p>A regression must have been introduced in Drupal 6.9 because I went to give it a spin tonight on Tomcat 6 (just placing the Quercus libs in Tomcat WEB-INF/lib and configuring the database connection in the META-INF/context.xml), and the install failed with a warning about UTF/UNICODE encoding, weird IO errors, and printing "SHOW SERVER_VERSION", finally warning that the version of PostgreSQL was not supported (even though it is 8+).  There appear to have been some changes in how the PostgreSQL version is detected, but even after commenting that check right out of the PostgreSQL database support file, the install fails.<br /><br />I downloaded a fresh Drupal 6.2 and that did install (although it also gives a customary error at the end of installation...but it does create and initialize the tables in the database).<br /><br />So I guess I'll chalk it up to a difference between the versions.  Hopefully it will be fixed (I may have to do more research) because Drupal 6.2 displays a red error indicating that it needs to be upgraded because of a security risk.<br /><br />Update: it looks like <a href="http://www.grails.org/PHP+Plugin">someone else has run into this</a></p>
+]]></content>
+  </entry>
+  
+</feed>

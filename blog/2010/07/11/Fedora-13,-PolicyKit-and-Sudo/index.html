@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>hello octopress world - Devoured By Lions</title>
+  <title>Fedora 13, PolicyKit and Sudo - Devoured By Lions</title>
   <meta name="author" content="aaron">
 
   
-  <meta name="description" content="i for one welcome my new cephalopod overlords
-">
+  <meta name="description" content="If you are like me and randomize your root password and rely on sudo to gain administrative privileges, then you might be annoyed at Fedora&#8217;s &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world">
+  <link rel="canonical" href="http://ahamid.github.com/blog/2010/07/11/Fedora-13%2C-PolicyKit-and-Sudo">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -68,7 +67,7 @@
   
   <header>
     
-      <h1 class="entry-title">Hello Octopress World</h1>
+      <h1 class="entry-title">Fedora 13, PolicyKit and Sudo</h1>
     
     
       <p class="meta">
@@ -84,15 +83,14 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2010-07-11T19:57:00-04:00" pubdate data-updated="true">Jul 11<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>i for one welcome my new cephalopod overlords</p>
-</div>
+<div class="entry-content">If you are like me and randomize your root password and rely on sudo to gain administrative privileges, then you might be annoyed at Fedora&#8217;s switch to PolicyKit.  While on the whole I think it&#8217;s a good framework and the right step forward (this opinion was earned after hours of time debugging this problem unfortunately), by default Fedora&#8217;s PolicyKit is configured to prompt for the root password.  If you have added your own account to the wheel group and granted sudo privileges to that group, this can be quite an annoyance.<br /><br />You can onfigure PolicyKit to treat the wheel group as administrator by:<br /><br /><blockquote><code><br />[you@localhost /]$ (cat &lt;&lt;EOF<br />[Configuration]<br />AdminIdentities=unix-user:0;unix-group:wheel<br />EOF<br />) &gt; /etc/polkit-1/localauthority.conf.d/99-wheel-policy.conf<br /></code></blockquote><br /><br />This policy will override other policies (well, granted you have no policies numbered greater than &#8216;99&#8217;!).<br /><br />Unfortunately PolicyKit support requires explicit cooperation from applications, and many applications have not yet been updated to integrate with PolicyKit.  Notably, the gnome system control applets (system-config-*) all still go through the old &#8216;consolehelper&#8217; utility.  This utility appears to effectively always prompt for the root password.  This distinction is not clear at all to the casual user, and it took me hours to realize that no amount of PolicyKit reconfiguration was going to make these apps work.</div>
 
 
   <footer>
@@ -114,7 +112,7 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2010-07-11T19:57:00-04:00" pubdate data-updated="true">Jul 11<span>th</span>, 2010</time>
       
 
 
@@ -122,7 +120,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2010/07/11/Fedora-13%2C-PolicyKit-and-Sudo/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2010/07/11/Fedora-13%2C-PolicyKit-and-Sudo/" >Tweet</a>
   
   
   
@@ -131,8 +129,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/07/22/Latest-Capybara-and-Selenium/" title="Previous Post: Latest Capybara and Selenium">&laquo; Latest Capybara and Selenium</a>
+        <a class="basic-alignment left" href="/blog/2010/03/09/ActiveRecord-types/" title="Previous Post: ActiveRecord types">&laquo; ActiveRecord types</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2011/01/05/Duplicity-on-Centos-5.5/" title="next Post: Duplicity on Centos 5.5">Duplicity on Centos 5.5 &raquo;</a>
       
     </p>
   </footer>

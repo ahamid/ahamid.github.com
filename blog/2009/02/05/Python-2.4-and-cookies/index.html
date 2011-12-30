@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>hello octopress world - Devoured By Lions</title>
+  <title>Python 2.4 and cookies - Devoured By Lions</title>
   <meta name="author" content="aaron">
 
   
-  <meta name="description" content="i for one welcome my new cephalopod overlords
-">
+  <meta name="description" content="Everytime I start liking Python&#8230;there has to be a downer.451 raise CookieError(&#8220;Attempt to set a reserved key: %s&#8221; % key)452 if &# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world">
+  <link rel="canonical" href="http://ahamid.github.com/blog/2009/02/05/Python-2.4-and-cookies">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -68,7 +67,7 @@
   
   <header>
     
-      <h1 class="entry-title">Hello Octopress World</h1>
+      <h1 class="entry-title">Python 2.4 and Cookies</h1>
     
     
       <p class="meta">
@@ -84,14 +83,14 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2009-02-05T22:54:00-05:00" pubdate data-updated="true">Feb 5<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>i for one welcome my new cephalopod overlords</p>
+<div class="entry-content">Everytime I start liking Python&#8230;there has to be a downer.<br /><br /><blockquote><br />451             raise CookieError(&#8220;Attempt to set a reserved key: %s&#8221; % key)<br />452         if &#8220;&#8221; != translate(key, idmap, LegalChars):<br />453             raise CookieError(&#8220;Illegal key value: %s&#8221; % key)<br />454 <br />455         # It&#8217;s a good key, so save it.<br />global CookieError = <class Cookie.CookieError>, key = &#8216;ABC:123.123.123.123:XYZ&#8217;<br />CookieError: Illegal key value: ABC:123.123.123.123:XYZ <br />      args = (&#8216;Illegal key value: ABC:123.123.123.123:XYZ&#8217;,)</blockquote><br /><br />Really?  Apparently Python&#8217;s (at least the cruddy version I&#8217;m stuck with in RHEL 5) Cookie implementation is rather strict in the headers it will accept and will just blow up if there are characters that are not in the RFC.  <br /><br /><a href="http://markmail.org/message/bsabuonsslb4ybiz">http://markmail.org/message/bsabuonsslb4ybiz</a><br /><br />While I generally would agree that the implementation conform to the spec and indicate when the input is non-standard, I think just blowing up is rather harsh.  There have to be garbage cookies floating around there on the web.  Unfortunately this one is related to the single sign on system in front of my app.  So there are two fails here.<br /><br />So I guess I&#8217;m left to figure out a way to kill this cookie before Python sees it&#8230;most likely I&#8217;ll have to implement this as a mysterious hack in the config of the Apache instance that frontends it.  Unless I can sneak it into some WSGI layer.  But I&#8217;ll probably just hack it because my life and patience are finite.
 </div>
 
 
@@ -114,7 +113,7 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2009-02-05T22:54:00-05:00" pubdate data-updated="true">Feb 5<span>th</span>, 2009</time>
       
 
 
@@ -122,7 +121,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2009/02/05/Python-2.4-and-cookies/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2009/02/05/Python-2.4-and-cookies/" >Tweet</a>
   
   
   
@@ -131,8 +130,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/07/22/Latest-Capybara-and-Selenium/" title="Previous Post: Latest Capybara and Selenium">&laquo; Latest Capybara and Selenium</a>
       
+        <a class="basic-alignment right" href="/blog/2009/02/14/Apache-configuration/" title="next Post: Apache configuration">Apache configuration &raquo;</a>
       
     </p>
   </footer>

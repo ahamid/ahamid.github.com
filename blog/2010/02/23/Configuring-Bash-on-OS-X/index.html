@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>hello octopress world - Devoured By Lions</title>
+  <title>Configuring Bash on OS X - Devoured By Lions</title>
   <meta name="author" content="aaron">
 
   
-  <meta name="description" content="i for one welcome my new cephalopod overlords
-">
+  <meta name="description" content="I&#8217;m moving to OS X for my work machine and one of the first things I like to set up is my terminal. OS X has thankfully moved to bash. I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world">
+  <link rel="canonical" href="http://ahamid.github.com/blog/2010/02/23/Configuring-Bash-on-OS-X">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -68,7 +67,7 @@
   
   <header>
     
-      <h1 class="entry-title">Hello Octopress World</h1>
+      <h1 class="entry-title">Configuring Bash on OS X</h1>
     
     
       <p class="meta">
@@ -84,15 +83,14 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2010-02-23T11:32:00-05:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>i for one welcome my new cephalopod overlords</p>
-</div>
+<div class="entry-content">I&#8217;m moving to OS X for my work machine and one of the first things I like to set up is my terminal.  OS X has thankfully moved to bash.  I initially tried adding aliases to my ~/.bashrc but they were not getting picked up.  This is because the Terminal application spawns shells as login shells.<br /><br />For login shells Bash will read the following files:<br /><br />1. ~/.bash_profile<br />2. ~/.bash_login<br />3. ~/.bash_profile<br /><br />For non-login interactive shells Bash will read the following file:<br /><br />1. ~/.bashrc<br /><br />See <a href="http://en.wikipedia.org/wiki/Bash#Startup_scripts">http://en.wikipedia.org/wiki/Bash#Startup_scripts</a><br /><br />I have always used ~/.bashrc and just assumed this file was sourced under all circumstances.  However I now suspect that this perception was due to the fact that typical Linux setups will provide a login script (e.g. ~/.bash_profile, or the system default) which itself sources ~/.bashrc.  So I suppose this behavior is more of a convention.  Which OS X does not follow.<br /><br />The solution is simple enough (philosophical issues on how to properly structure these files aside): simply link the login script to the ~/.bashrc script.<br /><br /><blockquote>ln -s ~/.bashrc ~/.bash_profile</blockquote><br /><br />The next step is to get rid of the annoying alert &#8220;bell&#8221; that is enabled by default in bash (and by the terminal application? the *nix terminal/character-device layer is complicated enough that I can&#8217;t pretend to understand how it actually works under the hood).  Bash uses a library called readline to get read line input (surprise!).  Readline uses the ~/.inputrc for various settings.  You can set &#8220;set bell-style visible&#8221; (or &#8220;set bell-style off&#8221; if you don&#8217;t want it at all) to quell the annoying beep emitted whenever you hit tab for a completion (which for me is every half second).  This did not quite do the job for me - the terminal was still beeping.  So I had to go into the Terminal application settings and change the bell style to visible under the shell tab.<br /><br />Hope that helps.</div>
 
 
   <footer>
@@ -114,7 +112,7 @@
   
 
 
-<time datetime="2011-12-30T14:44:00-05:00" pubdate data-updated="true">Dec 30<span>th</span>, 2011</time>
+<time datetime="2010-02-23T11:32:00-05:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2010</time>
       
 
 
@@ -122,7 +120,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2011/12/30/hello-octopress-world/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2010/02/23/Configuring-Bash-on-OS-X/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2010/02/23/Configuring-Bash-on-OS-X/" >Tweet</a>
   
   
   
@@ -131,8 +129,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/07/22/Latest-Capybara-and-Selenium/" title="Previous Post: Latest Capybara and Selenium">&laquo; Latest Capybara and Selenium</a>
+        <a class="basic-alignment left" href="/blog/2010/01/31/WEP-sucks/" title="Previous Post: WEP sucks">&laquo; WEP sucks</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2010/03/05/More-OS-Xisms/" title="next Post: More OS Xisms">More OS Xisms &raquo;</a>
       
     </p>
   </footer>

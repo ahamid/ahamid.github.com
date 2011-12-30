@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>ruby-oci8 on Fedora x86_64 - Devoured By Lions</title>
+  <meta name="author" content="aaron">
+
+  
+  <meta name="description" content="Read: http://ruby-oci8.rubyforge.org/en/InstallForInstantClient.htmlDownload and install: http://www.oracle.com/technetwork/topics/linuxx86-64soft- &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ahamid.github.com/blog/2011/04/08/ruby-oci8-on-Fedora-x86_64">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Devoured By Lions" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Devoured By Lions</a></h1>
+  
+    <h2>the eternal struggle to tame complexity</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ahamid.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Ruby-oci8 on Fedora X86_64</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-08T13:46:00-04:00" pubdate data-updated="true">Apr 8<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content">Read: <a href="http://ruby-oci8.rubyforge.org/en/InstallForInstantClient.html">http://ruby-oci8.rubyforge.org/en/InstallForInstantClient.html</a><div>Download and install: <a href="http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html">http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html</a></div><div><ul><li><span><span>oracle-instantclient-basic-10.2.0.4-1.x86_64.rpm</span></span></li><li><span class="Apple-style-span" style="font-family: arial, helvetica, sans-serif; font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; "><span><span>oracle-instantclient-devel-10.2.0.4-1.x86_64.rpm</span></span></span></li></ul><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">Set your LD_LIBRARY_PATH so compile can find Oracle libs. <i><b>Double check the path here actually reflects the version of packages you downloaded</b></i>: export LD_LIBRARY_PATH=/usr/lib/oracle/10.2.0.4/client/lib</span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;"><br /></span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; ">Install ruby-oci8 gem: gem install ruby-oci8 (or via bundler)</span></span></div></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;"><br /></span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">With luck ruby-oc8 will build.</span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;"><br /></span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">Tell SELinux that these libs can have an executable stack: (see: </span></span><a href="http://fedoraforum.org/forum/showthread.php?t=259605">http://fedoraforum.org/forum/showthread.php?t=259605</a>)</div><div><ul><li><span class="Apple-style-span" style="font-family: arial, helvetica, sans-serif; font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px; ">sudo /usr/bin/execstack -c /usr/lib/oracle/10.2.0.4/client64/lib/libclntsh.so.10.1 </span></li><li><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">sudo /usr/bin/execstack -c /usr/lib/oracle/10.2.0.4/client64/lib/libnnz10.so</span></span></li></ul><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">Test it:</span></span></div></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;"><br /></span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">require &#8216;dbi&#8217;</span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;">require &#8216;oci8&#8217;</span></span></div><div><span class="Apple-style-span" ><span class="Apple-style-span" style="font-size: 12px; -webkit-border-horizontal-spacing: 2px; -webkit-border-vertical-spacing: 2px;"><div>dbh = DBI.connect(&#8220;DBI:OCI8:whatever&#8221;, username, password)</div><div>dbh.execute(&#8216;select * from whatever&#8217;)</div></span></span></div></div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">aaron</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-08T13:46:00-04:00" pubdate data-updated="true">Apr 8<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ahamid.github.com/blog/2011/04/08/ruby-oci8-on-Fedora-x86_64/" data-via="_aaron_" data-counturl="http://ahamid.github.com/blog/2011/04/08/ruby-oci8-on-Fedora-x86_64/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/04/07/Oracle-XE-on-Fedora-x86_64/" title="Previous Post: Oracle XE on Fedora x86_64">&laquo; Oracle XE on Fedora x86_64</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/05/01/The-Curiously-Recurring-Installation-Pattern%2A/" title="next Post: The Curiously Recurring Installation Pattern*">The Curiously Recurring Installation Pattern* &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/12/30/hello-octopress-world/">hello octopress world</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/22/Latest-Capybara-and-Selenium/">Latest Capybara and Selenium</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/Monads-in-Java/">Monads in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/Increasing-processes%2C-sessions-and-transactions-in-Oracle-XE/">Increasing processes, sessions and transactions in Oracle XE</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/05/01/The-Curiously-Recurring-Installation-Pattern%2A/">The Curiously Recurring Installation Pattern*</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("_aaron_", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/_aaron_" class="twitter-follow-button" data-show-count="false">Follow @_aaron_</a>
+  
+</section>
+
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ahamid">@ahamid</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ahamid',
+            count: 10,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - aaron -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
